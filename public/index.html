@@ -7,16 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Chatbot with PDF</h1>
-        <form id="chatForm" action="/chatbot" method="post">
-            <div class="form-group">
-                <label for="query">Your Question:</label>
-                <input type="text" id="query" name="query" required>
-            </div>
-            <button type="submit">Submit</button>
+    <div class="chat-container">
+        <div class="chat-header">
+            Chatbot with PDF
+        </div>
+        <div id="chatBox" class="chat-box"></div>
+        <form id="queryForm">
+            <input type="text" id="query" placeholder="Type your question..." autocomplete="off">
+            <button type="submit">Send</button>
         </form>
-        <ul id="chatContainer" class="chat-container"></ul>
     </div>
     <script src="script.js"></script>
 </body>

@@ -1,13 +1,13 @@
-document.getElementById('chatForm').addEventListener('submit', function (event) {
+document.getElementById('queryForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const query = document.getElementById('query').value;
-    const chatContainer = document.getElementById('chatContainer');
+    const chatBox = document.getElementById('chatBox');
 
-    const userMessageElem = document.createElement('li');
-    userMessageElem.textContent = 'You: ' + query;
-    userMessageElem.className = 'user-message';
-    chatContainer.appendChild(userMessageElem);
+    const userMessageElem = document.createElement('div');
+    userMessageElem.className = 'message user-message';
+    userMessageElem.innerHTML = `<div class="message-content">${query}</div>`;
+    chatBox.appendChild(userMessageElem);
 
     fetch('/chatbot', {
         method: 'POST',
@@ -18,10 +18,15 @@ document.getElementById('chatForm').addEventListener('submit', function (event) 
     })
     .then(response => response.text())
     .then(reply => {
-        const botMessageElem = document.createElement('li');
-        botMessageElem.textContent = 'Bot: ' + reply;
-        botMessageElem.className = 'bot-message';
-        chatContainer.appendChild(botMessageElem);
+        const botMessageElem = document.createElement('div');
+        botMessageElem.className = 'message bot-message';
+        botMessageElem.innerHTML = `<div class="message-content">${reply}</div>`;
+        chatBox.appendChild(botMessageElem);
+        // Scroll to the bottom of the chat container
+        chatBox.scrollTop = chatBox.scrollHeight;
     })
     .catch(error => console.error('Error:', error));
+
+    // Clear the input field
+    document.getElementById('query').value = '';
 });
