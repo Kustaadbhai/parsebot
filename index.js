@@ -98,7 +98,7 @@ async function chatbotWithPDF(filePath, query) {
 // POST endpoint to process the form submission
 app.post('/chatbot', async (req, res) => {
   const query = req.body.query;
-  const chatbotResponse = await chatbotWithPDF('C:\\Users\\ahmed\\Downloads\\new.pdf', query);
+  const chatbotResponse = await chatbotWithPDF('"C:\Users\\ahmed\\OneDrive\\Desktop\\my-app\\public\\new.pdf"', query);
   res.send(chatbotResponse);
 });
 
