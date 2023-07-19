@@ -1,8 +1,14 @@
-document.querySelector('form').addEventListener('submit', function(event) {
+document.getElementById('chatForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const query = document.getElementById('query').value;
-    
+    const chatContainer = document.getElementById('chatContainer');
+
+    const userMessageElem = document.createElement('li');
+    userMessageElem.textContent = 'You: ' + query;
+    userMessageElem.className = 'user-message';
+    chatContainer.appendChild(userMessageElem);
+
     fetch('/chatbot', {
         method: 'POST',
         headers: {
@@ -12,7 +18,10 @@ document.querySelector('form').addEventListener('submit', function(event) {
     })
     .then(response => response.text())
     .then(reply => {
-        document.getElementById('response').textContent = 'Reply: ' + reply;
+        const botMessageElem = document.createElement('li');
+        botMessageElem.textContent = 'Bot: ' + reply;
+        botMessageElem.className = 'bot-message';
+        chatContainer.appendChild(botMessageElem);
     })
     .catch(error => console.error('Error:', error));
 });
