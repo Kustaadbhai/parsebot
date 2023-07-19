@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot with PDF</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chatbot with PDF</h1>
+        <form action="/chatbot" method="post">
+            <div class="form-group">
+                <label for="query">Your Question:</label>
+                <input type="text" id="query" name="query" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="response"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
