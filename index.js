@@ -10,6 +10,9 @@ const natural = require('natural');  // Add this line to use the 'natural' libra
 // Create an express application
 const app = express();
 
+// Import the TF-IDF function from the 'natural' library
+const TfIdf = natural.TfIdf;
+
 // Use body-parser middleware to parse incoming request bodies
 app.use(bodyParser.json());
 
@@ -54,13 +57,29 @@ function getRelevantSections(text, query) {
   const tokenizer = new natural.SentenceTokenizer();
   const sentences = tokenizer.tokenize(text);
 
+  const tfidf = new TfIdf();
+
+  // Add each sentence to the TF-IDF instance
+  sentences.forEach(sentence => tfidf.addDocument(sentence));
+
   // Extract keywords from the query
   const keywords = query.split(' ');
 
-  // Find sentences that contain at least one keyword
-  const relevantSentences = sentences.filter(sentence => 
-    keywords.some(keyword => sentence.toLowerCase().includes(keyword.toLowerCase()))
-  );
+  // Find the top 5 sentences for each keyword
+  let relevantSentences = [];
+  keywords.forEach(keyword => {
+    tfidf.tfidfs(keyword, function(i, measure) {
+      if (measure > 0) {
+        relevantSentences.push(sentences[i]);
+      }
+    });
+  });
+
+  // Sort the sentences by their TF-IDF measure
+  relevantSentences.sort((a, b) => tfidf.tfidf(b, 0) - tfidf.tfidf(a, 0));
+
+  // Take the top 10 sentences
+  relevantSentences = relevantSentences.slice(0, 10);
 
   // Combine the relevant sentences back into a string
   const relevantText = relevantSentences.join(' ');
