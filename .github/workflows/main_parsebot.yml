@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: https://mcr.microsoft.com/
-        username: ${{ secrets.AzureAppService_ContainerUsername_ca8109d81a4b47f2b0b5be930c786578 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_4f3c68a831d8419892d311e9f21055d3 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_8df2e058fd8e46c1980a3ac7a0261ba4 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_ab7e90c247eb4e2aad64457790c00505 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_ca8109d81a4b47f2b0b5be930c786578 }}/appsvc/staticsite:${{ github.sha }}
+        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_8df2e058fd8e46c1980a3ac7a0261ba4 }}/appsvc/staticsite:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'parsebot'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_fa8b833129db46aab4c4aad80b458059 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_ca8109d81a4b47f2b0b5be930c786578 }}/appsvc/staticsite:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e278aa2ecf6b4c3bb89d045924d55d88 }}
+        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_8df2e058fd8e46c1980a3ac7a0261ba4 }}/appsvc/staticsite:${{ github.sha }}'
