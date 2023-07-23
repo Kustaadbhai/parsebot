@@ -22,15 +22,15 @@ jobs:
     - name: Log in to registry
       uses: docker/login-action@v2
       with:
-        registry: https://5a186596-323a-4029-ab61-4d7d470e3bab/
-        username: ${{ secrets.AzureAppService_ContainerUsername_e07af74becef471ca03057c064809922 }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_2ac4ffc835274b45acb68f4b48da4538 }}
+        registry: https://kustaad.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_5b7dcf55cfda426bab9af928585c4992 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_8127e6c9b1a64231976bcc681a6688b9 }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v3
       with:
         push: true
-        tags: 5a186596-323a-4029-ab61-4d7d470e3bab/${{ secrets.AzureAppService_ContainerUsername_e07af74becef471ca03057c064809922 }}/img:${{ github.sha }}
+        tags: kustaad.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5b7dcf55cfda426bab9af928585c4992 }}/kustaad:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'parsebot'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_db5d9defe3a24376947035f1e9702f3c }}
-        images: '5a186596-323a-4029-ab61-4d7d470e3bab/${{ secrets.AzureAppService_ContainerUsername_e07af74becef471ca03057c064809922 }}/img:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0265e31321344962afc569d99a15789c }}
+        images: 'kustaad.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_5b7dcf55cfda426bab9af928585c4992 }}/kustaad:${{ github.sha }}'
